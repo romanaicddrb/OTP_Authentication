@@ -1,4 +1,4 @@
-package com.example.otp_authentication.pin_view;
+package org.icddrb.otp_authentication.pin_view;
 
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -13,7 +13,7 @@ import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.EditText;
-import com.example.otp_authentication.R;
+import org.icddrb.otp_authentication.R;
 
 import java.util.ArrayList;
 

@@ -1,13 +1,14 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
-    namespace 'com.example.otp_authentication'
+    namespace 'org.icddrb.otp_authentication'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.otp_authentication"
+        applicationId "org.icddrb.otp_authentication"
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -41,5 +42,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+
+    // sms auto read
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
+    implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
 
 }

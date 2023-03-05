@@ -1,4 +1,4 @@
-package com.example.otp_authentication.model_class.request;
+package org.icddrb.otp_authentication.model_class.request;
 
 public class OTPVerifyModel {
 

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "238713905485",
+    "project_id": "mchd-otp-auth",
+    "storage_bucket": "mchd-otp-auth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238713905485:android:84dbf0afe4e4f74f631704",
+        "android_client_info": {
+          "package_name": "org.icddrb.otp_authentication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238713905485-594s9icfu3jlr3l85oo1io7dek145lsj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfrnn7fBAFkzSSKc48ngsnPyHgei1TX2I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238713905485-594s9icfu3jlr3l85oo1io7dek145lsj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

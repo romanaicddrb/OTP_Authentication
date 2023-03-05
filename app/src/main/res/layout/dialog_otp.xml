@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="50dp"
-    android:background="@drawable/dialog_background"
+
+    android:background="@android:color/transparent"
     tools:context=".activity.OTPDialog">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="30dp"
+        android:padding="20dp"
         android:gravity="center"
         android:orientation="vertical"
+        android:background="@drawable/dialog_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +40,7 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
 
-        <com.example.otp_authentication.pin_view.PinView
+        <org.icddrb.otp_authentication.pin_view.PinView
             android:id="@+id/pin_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

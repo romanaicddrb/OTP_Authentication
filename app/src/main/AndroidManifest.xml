@@ -4,6 +4,7 @@
 
     <!--permissions for INTERNET-->
     <uses-permission android:name="android.permission.INTERNET"/>
+<!--    <uses-permission android:name="android.permission.RECEIVE_SMS"/>-->
 
 
 
@@ -31,6 +32,13 @@
         </activity>
 
         <activity android:name=".activity.HomeActivity" />
+
+        <receiver android:name=".receiver.SMSReceiver" android:exported="true"
+            android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

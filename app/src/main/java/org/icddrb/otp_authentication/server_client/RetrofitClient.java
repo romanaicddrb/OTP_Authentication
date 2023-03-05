@@ -1,17 +1,12 @@
-package com.example.otp_authentication.server_client;
+package org.icddrb.otp_authentication.server_client;
 
 import android.app.Dialog;
 import android.content.Context;
 
-import com.example.otp_authentication.R;
-import com.example.otp_authentication.model_class.request.OTPRequestModel;
-import com.example.otp_authentication.server_client.api_interface.OTPAPI;
+import org.icddrb.otp_authentication.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;

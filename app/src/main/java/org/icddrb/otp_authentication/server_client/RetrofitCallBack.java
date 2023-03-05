@@ -1,7 +1,5 @@
-package com.example.otp_authentication.server_client;
+package org.icddrb.otp_authentication.server_client;
 
-import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;

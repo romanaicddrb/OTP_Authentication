@@ -1,11 +1,8 @@
-package com.example.otp_authentication.Util;
+package org.icddrb.otp_authentication.Util;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.provider.Settings;
-
-import com.example.otp_authentication.R;
 
 public class AppUtils {
     Context context;

@@ -1,4 +1,4 @@
-package com.example.otp_authentication.activity;
+package org.icddrb.otp_authentication.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.otp_authentication.R;
+import org.icddrb.otp_authentication.R;
+
 
 public class HomeActivity  extends AppCompatActivity {
 

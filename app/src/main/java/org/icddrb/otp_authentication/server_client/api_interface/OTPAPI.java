@@ -1,7 +1,7 @@
-package com.example.otp_authentication.server_client.api_interface;
+package org.icddrb.otp_authentication.server_client.api_interface;
 
-import com.example.otp_authentication.model_class.request.OTPRequestModel;
-import com.example.otp_authentication.model_class.request.OTPVerifyModel;
+import org.icddrb.otp_authentication.model_class.request.OTPRequestModel;
+import org.icddrb.otp_authentication.model_class.request.OTPVerifyModel;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

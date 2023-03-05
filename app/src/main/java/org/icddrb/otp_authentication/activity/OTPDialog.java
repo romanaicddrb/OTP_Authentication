@@ -1,9 +1,10 @@
-package com.example.otp_authentication.activity;
+package org.icddrb.otp_authentication.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -12,24 +13,31 @@ import android.view.Window;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.example.otp_authentication.R;
-import com.example.otp_authentication.Util.AppUtils;
-import com.example.otp_authentication.model_class.request.OTPRequestModel;
-import com.example.otp_authentication.model_class.request.OTPVerifyModel;
-import com.example.otp_authentication.pin_view.PinView;
-import com.example.otp_authentication.server_client.RetrofitCallBack;
-import com.example.otp_authentication.server_client.RetrofitClient;
-import com.example.otp_authentication.server_client.api_interface.OTPAPI;
+import org.icddrb.otp_authentication.R;
+
+import org.icddrb.otp_authentication.model_class.request.OTPRequestModel;
+import org.icddrb.otp_authentication.model_class.request.OTPVerifyModel;
+import org.icddrb.otp_authentication.pin_view.PinView;
+import org.icddrb.otp_authentication.receiver.SMSReceiver;
+import org.icddrb.otp_authentication.server_client.RetrofitCallBack;
+import org.icddrb.otp_authentication.server_client.RetrofitClient;
+import org.icddrb.otp_authentication.server_client.api_interface.OTPAPI;
+
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Response;
 
 public class OTPDialog extends Dialog {
 
     Activity activity;
-    String email;
+
+    OTPRequestModel requestModel;
 
     PinView pinView;
 
@@ -38,10 +46,12 @@ public class OTPDialog extends Dialog {
 
     MaterialButton resendBtn;
 
-    public OTPDialog(Activity a, String email) {
+    SMSReceiver smsReceiver;
+
+    public OTPDialog(Activity a, OTPRequestModel requestModel) {
         super(a);
         this.activity = a;
-        this.email = email;
+        this.requestModel = requestModel;
     }
 
     @Override
@@ -66,6 +76,15 @@ public class OTPDialog extends Dialog {
         resendBtn.setOnClickListener(view -> resendOTP());
 
         setCounter();
+
+        startSmartUserConsent();
+
+    }
+
+    private void startSmartUserConsent() {
+
+        SmsRetrieverClient client = SmsRetriever.getClient(activity);
+        client.startSmsUserConsent(null);
 
     }
 
@@ -111,13 +130,14 @@ public class OTPDialog extends Dialog {
 
     public void submitOTP() {
 
-        OTPVerifyModel requestModel = new OTPVerifyModel(
-                AppUtils.getInstance(activity.getApplicationContext()).getDeviceID(),
-                email, Integer.parseInt(pinView.getText()));
+        OTPVerifyModel requestObject = new OTPVerifyModel(
+                requestModel.getDeviceId(),
+                requestModel.getRequestUid(),
+                Integer.parseInt(pinView.getText()));
 
         RetrofitClient.get(activity)
                 .create(OTPAPI.class)
-                .verifyOTP(requestModel)
+                .verifyOTP(requestObject)
                 .enqueue(new RetrofitCallBack<String>() {
                     @Override
                     public void onSuccess(@NonNull Response<String> response) {
@@ -136,10 +156,6 @@ public class OTPDialog extends Dialog {
 
     public void resendOTP() {
 
-        OTPRequestModel requestModel = new OTPRequestModel(
-                AppUtils.getInstance(activity.getApplicationContext()).getDeviceID(),
-                email, "email");
-
         RetrofitClient.get(activity)
                 .create(OTPAPI.class)
                 .requestOTP(requestModel)
@@ -157,4 +173,50 @@ public class OTPDialog extends Dialog {
                 });
     }
 
+
+
+
+    private void getOtpFromMessage(String message) {
+
+        Pattern otpPattern = Pattern.compile("(|^)\\d{6}");
+        Matcher matcher = otpPattern.matcher(message);
+        if (matcher.find()){
+            pinView.setText(matcher.group(0));
+        }
+    }
+    private void registerBroadcastReceiver(){
+
+        smsReceiver = new SMSReceiver();
+
+        smsReceiver.smsBroadcastReceiverListener = new SMSReceiver.SmsBroadcastReceiverListener() {
+            @Override
+            public void onSuccess(Intent intent) {
+
+//                startActivityForResult(intent,REQ_USER_CONSENT);
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        };
+
+        IntentFilter intentFilter = new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION);
+        activity.registerReceiver(smsReceiver,intentFilter);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerBroadcastReceiver();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        activity.unregisterReceiver(smsReceiver);
+    }
 }

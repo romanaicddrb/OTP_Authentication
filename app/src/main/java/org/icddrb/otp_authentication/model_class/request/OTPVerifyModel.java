@@ -2,38 +2,27 @@ package org.icddrb.otp_authentication.model_class.request;
 
 public class OTPVerifyModel {
 
-    int projectId;
+    String platform;
     String deviceId;
-    String requestUid;
-    int otp;
+    String mobile;
+    String email;
+    String otp;
 
-    public OTPVerifyModel(String deviceId,
-                          String requestUid,
-                          int otp) {
-
-        this.projectId = 1;
-        this.deviceId = deviceId;
-        this.requestUid = requestUid;
+    public OTPVerifyModel(OTPRequestModel object,
+                          String otp) {
+        this.platform = object.getPlatform();
+        this.deviceId = object.getDeviceId();
+        this.mobile = object.getMobile();
+        this.email = object.getEmail();
         this.otp = otp;
     }
 
-    public OTPVerifyModel(int projectId,
-                          String deviceId,
-                          String requestUid,
-                          int otp) {
-
-        this.projectId = projectId;
-        this.deviceId = deviceId;
-        this.requestUid = requestUid;
-        this.otp = otp;
+    public String getPlatform() {
+        return platform;
     }
 
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public void setPlatform(String platform) {
+        this.platform = platform;
     }
 
     public String getDeviceId() {
@@ -44,19 +33,27 @@ public class OTPVerifyModel {
         this.deviceId = deviceId;
     }
 
-    public String getRequestUid() {
-        return requestUid;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setRequestUid(String requestUid) {
-        this.requestUid = requestUid;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public int getOtp() {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getOtp() {
         return otp;
     }
 
-    public void setOtp(int otp) {
+    public void setOtp(String otp) {
         this.otp = otp;
     }
 }

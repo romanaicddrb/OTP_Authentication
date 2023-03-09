@@ -14,8 +14,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RetrofitClient {
 
     private static Retrofit retrofit;
-    private static final String BASE_URL = "https://mchdweb.icddrb.org/otp/api/OtpRequests/";
+//    private static final String BASE_URL = "https://mchdweb.icddrb.org/otp/api/OtpRequests/";
 
+    private static final String BASE_URL = "http://172.17.251.226:8080/";
     public static Retrofit get(Context context) {
         show(context);
         if (retrofit == null) {

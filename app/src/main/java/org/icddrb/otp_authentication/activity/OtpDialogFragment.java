@@ -39,8 +39,6 @@ import retrofit2.Response;
 
 public class OtpDialogFragment extends DialogFragment {
 
-    Activity activity;
-
     OTPRequestModel requestModel;
 
     PinView pinView;
@@ -109,13 +107,11 @@ public class OtpDialogFragment extends DialogFragment {
 
         startSmartUserConsent();
 
-        activityResultLauncher.launch(new Intent(getActivity(), OtpDialogFragment.class));
-
     }
 
     private void startSmartUserConsent() {
 
-        SmsRetrieverClient client = SmsRetriever.getClient(activity);
+        SmsRetrieverClient client = SmsRetriever.getClient(getActivity());
         client.startSmsUserConsent(null);
 
     }
@@ -123,7 +119,7 @@ public class OtpDialogFragment extends DialogFragment {
     @SuppressLint("DefaultLocale")
     void setCounter() {
         resendBtn.setEnabled(false);
-        resendBtn.setTextColor(activity.getResources().getColor(R.color.gray, null));
+        resendBtn.setTextColor(getActivity().getResources().getColor(R.color.gray, null));
 
         new CountDownTimer(180000, 1000) {
 
@@ -138,7 +134,7 @@ public class OtpDialogFragment extends DialogFragment {
             public void onFinish() {
                 timeCounter.setText("00:00 min");
                 resendBtn.setEnabled(true);
-                resendBtn.setTextColor(activity.getResources().getColor(R.color.primary_color_dark, null));
+                resendBtn.setTextColor(getActivity().getResources().getColor(R.color.primary_color_dark, null));
             }
         }.start();
 
@@ -163,18 +159,17 @@ public class OtpDialogFragment extends DialogFragment {
     public void submitOTP() {
 
         OTPVerifyModel requestObject = new OTPVerifyModel(
-                requestModel.getDeviceId(),
-                requestModel.getRequestUid(),
-                Integer.parseInt(pinView.getText()));
+                requestModel,
+                pinView.getText());
 
-        RetrofitClient.get(activity)
+        RetrofitClient.get(getActivity())
                 .create(OTPAPI.class)
                 .verifyOTP(requestObject)
                 .enqueue(new RetrofitCallBack<String>() {
                     @Override
                     public void onSuccess(@NonNull Response<String> response) {
-                        activity.startActivity(new Intent(activity, HomeActivity.class));
-                        activity.finish();
+                        getActivity().startActivity(new Intent(getActivity(), HomeActivity.class));
+                        getActivity().finish();
                         dismiss();
                     }
 
@@ -188,7 +183,7 @@ public class OtpDialogFragment extends DialogFragment {
 
     public void resendOTP() {
 
-        RetrofitClient.get(activity)
+        RetrofitClient.get(getActivity())
                 .create(OTPAPI.class)
                 .requestOTP(requestModel)
                 .enqueue(new RetrofitCallBack<String>() {
@@ -222,7 +217,9 @@ public class OtpDialogFragment extends DialogFragment {
             @Override
             public void onSuccess(Intent intent) {
 
-                startActivityForResult(intent, REQ_USER_CONSENT);
+//                startActivityForResult(intent, REQ_USER_CONSENT);
+
+                activityResultLauncher.launch(intent);
 
             }
 
@@ -233,7 +230,7 @@ public class OtpDialogFragment extends DialogFragment {
         };
 
         IntentFilter intentFilter = new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION);
-        activity.registerReceiver(smsReceiver, intentFilter);
+        getActivity().registerReceiver(smsReceiver, intentFilter);
 
     }
 

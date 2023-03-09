@@ -30,31 +30,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-//        AppSignatureHelper helper = new AppSignatureHelper(this);
-//        ArrayList<String> signs = helper.getAppSignatures();
-//
-//        for (String sig : signs) {
-//            System.out.println("SIGNTURES " + sig);
-//        }
-
-//        hash code : sXzcZUledx5
-
-
-
         mobileNo = findViewById(R.id.mobile_no);
         email = findViewById(R.id.email);
 
         Button otpBtn = findViewById(R.id.get_otp_btn);
         otpBtn.setOnClickListener(view -> {
 
-                    OTPRequestModel requestModel = new OTPRequestModel(
-                "","", "");
-
-            openOTPDialog(requestModel);
-
-//            if (isValid()) {
-//                sendOTP();
-//            }
+            if (isValid()) {
+                sendOTP();
+            }
         });
     }
 
@@ -77,13 +61,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void sendOTP() {
 
-//        OTPRequestModel requestModel = new OTPRequestModel(
-//                AppUtils.getInstance(LoginActivity.this).getDeviceID(),
-//                email.getText().toString(), "email");
-
         OTPRequestModel requestModel = new OTPRequestModel(
                 AppUtils.getInstance(LoginActivity.this).getDeviceID(),
-                mobileNo.getText().toString(), "mobile");
+                mobileNo.getText().toString(), email.getText().toString());
 
         RetrofitClient.get(this)
                 .create(OTPAPI.class)

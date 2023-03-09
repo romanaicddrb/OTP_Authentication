@@ -9,14 +9,16 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface OTPAPI {
-    @Headers({"accept: text/plain",
+    @Headers({"accept: application/json",
             "Content-Type: application/json"})
-    @POST("request_otp")
+//    @POST("request_otp")
+    @POST("otp")
     Call<String> requestOTP(@Body OTPRequestModel requestObject);
 
-    @Headers({"accept: text/plain",
+    @Headers({"accept: application/json",
             "Content-Type: application/json"})
-    @POST("submit_otp")
+//    @POST("submit_otp")
+    @POST("otp/verify")
     Call<String> verifyOTP(@Body OTPVerifyModel requestObject);
 
 }

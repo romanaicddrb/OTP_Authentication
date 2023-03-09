@@ -6,44 +6,33 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 public class OTPRequestModel implements Parcelable {
-    int projectId;
+    String platform;
     String deviceId;
-    String requestUid;
-
-    @SerializedName("request_type")
-    String requestType;
+    String mobile;
+    String email;
 
     public OTPRequestModel(String deviceId,
-                           String requestUid,
-                           String requestType) {
-        this.projectId = 1;
+                           String mobile,
+                           String email) {
+        this.platform = "ANDROID";
         this.deviceId = deviceId;
-        this.requestUid = requestUid;
-        this.requestType = requestType;
-    }
-    public OTPRequestModel(int projectId,
-                           String deviceId,
-                           String requestUid,
-                           String requestType) {
-        this.projectId = projectId;
-        this.deviceId = deviceId;
-        this.requestUid = requestUid;
-        this.requestType = requestType;
+        this.mobile = mobile;
+        this.email = email;
     }
 
     public OTPRequestModel(Parcel parcel) {
-        this.projectId = parcel.readInt();
+        this.platform = parcel.readString();
         this.deviceId = parcel.readString();
-        this.requestUid = parcel.readString();
-        this.requestType = parcel.readString();
+        this.mobile = parcel.readString();
+        this.email = parcel.readString();
     }
 
-    public int getProjectId() {
-        return projectId;
+    public String getPlatform() {
+        return platform;
     }
 
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public void setPlatform(String platform) {
+        this.platform = platform;
     }
 
     public String getDeviceId() {
@@ -54,22 +43,21 @@ public class OTPRequestModel implements Parcelable {
         this.deviceId = deviceId;
     }
 
-    public String getRequestUid() {
-        return requestUid;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setRequestUid(String requestUid) {
-        this.requestUid = requestUid;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public String getRequestType() {
-        return requestType;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRequestType(String requestType) {
-        this.requestType = requestType;
+    public void setEmail(String email) {
+        this.email = email;
     }
-
 
     @Override
     public int describeContents() {
@@ -79,10 +67,10 @@ public class OTPRequestModel implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
 
-        parcel.writeInt(projectId);
-        parcel.writeString(requestUid);
+        parcel.writeString(platform);
         parcel.writeString(deviceId);
-        parcel.writeString(requestType);
+        parcel.writeString(mobile);
+        parcel.writeString(email);
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator<OTPRequestModel>() {
@@ -100,10 +88,10 @@ public class OTPRequestModel implements Parcelable {
     @Override
     public String toString() {
         return "OTPRequestModel{" +
-                "projectId=" + projectId +
+                "platform=" + platform +
                 ", deviceId='" + deviceId + '\'' +
-                ", requestUid='" + requestUid + '\'' +
-                ", requestType=" + requestType +
+                ", mobile='" + mobile + '\'' +
+                ", email=" + email +
                 '}';
     }
 }
